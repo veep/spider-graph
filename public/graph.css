@@ -1,0 +1,116 @@
+@charset "UTF-8";
+/* CSS Document */
+
+body{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:18px;
+	color:#69F;	
+}
+.left_col{
+	position:relative;
+	margin-right:40px;
+	float:left;
+}
+.right_col{
+	width:400px;
+	float:left;
+	margin-top:-20px;
+}
+
+#graph_canvas{
+	border:1px solid #ccc;	
+	position:relative;
+}
+.container{
+	position:relative;	
+}
+
+#corner_5{
+	position:absolute;
+	top:87px;
+	right:350px;	
+	text-align:right;
+}
+#corner_3{
+	position:absolute;
+	top:87px;
+	left:350px;	
+}
+
+#corner_9{
+	position:absolute;
+	top:200px;
+	left:10px;	
+	width:100px;
+	text-align:right;
+}
+#corner_1{
+	position:absolute;
+	top:200px;
+	left:490px;	
+	width:100px;
+}
+
+#corner_7{
+	position:absolute;
+	top:355px;
+	left:10px;	
+	width:100px;
+	text-align:right;
+}
+#corner_15{
+	position:absolute;
+	top:355px;
+	left:490px;	
+	width:100px;
+}
+
+#corner_11{
+	position:absolute;
+	top:490px;
+	right:350px;
+	text-align:right;
+}
+#corner_13{
+	position:absolute;
+	top:490px;
+	left:350px;	
+}
+.slider_container{
+	margin-bottom:20px;
+	position:relative;
+}
+.slider{
+	margin-top:5px;
+}
+
+@font-face {
+    font-family: sosa;
+	src: url(../js/webfonts/sosa.ttf);
+
+}
+.icon_font{
+	font-family: sosa;
+  	font-size: 1em;	
+	cursor:pointer;
+	position:absolute;
+	right:10px;	
+	top:5px;
+}
+   
+.save{
+	display:none;
+}
+
+.button{
+	font-size:9px;
+	
+}
+input.ui-button {
+	padding:.3em .4em;
+	margin-bottom:3px;
+}
+.label{
+	padding-right:10px;	
+
+}
