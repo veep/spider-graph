@@ -56,7 +56,6 @@ $(document).ready(function(){
 		//draw polygon
 		$("#graph_canvas").drawPolygon({
 		  fillStyle: "#fff",
-		  layer:true,
 		  name:"polygon",
 		  strokeStyle: "#000",
 		  x:300, y:300,
