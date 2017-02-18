@@ -86,7 +86,7 @@ body{
 
 @font-face {
     font-family: sosa;
-	src: url(../js/webfonts/sosa.ttf);
+	src: url(/sosa-regular-webfont.ttf);
 
 }
 .icon_font{
