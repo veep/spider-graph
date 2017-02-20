@@ -16,7 +16,6 @@
     $( "canvas" ).on( "updateCorners",
                      function() {
       drawTriangles();
-      includeTitle();
       updateSliders();
     });
 
@@ -33,6 +32,8 @@
           layer: true,
           name: 'bg'
         })
+       includeTitle();
+
       if (corners.length < 3) {
           return;
       }
