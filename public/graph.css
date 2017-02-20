@@ -89,15 +89,15 @@ body{
 	src: url(/sosa-regular-webfont.ttf);
 
 }
-.icon_font{
-	font-family: sosa;
-  	font-size: 1em;	
+.delete_control{
 	cursor:pointer;
 	position:absolute;
 	right:10px;	
 	top:5px;
 }
-   
+.edit_control{
+   cursor: pointer;
+}
 .save{
 	display:none;
 }

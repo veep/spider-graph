@@ -50,7 +50,8 @@ $(document).ready(function(){
       + '<div class="slider_label">' 
       + '<span class="label">' + item.name + '</span>'
       + '<span class="save"><input type="button" class="button" value="save" /></span>' 
-      + '<span class="icon_font">a</span>'
+      + '<span class="edit_control"><i class="fa fa-pencil"></i></span>'
+      + '<span class="delete_control"><i class="fa fa-trash-o"></i></span>'
       + '</div><div  class="slider"></div></div>');
       var just_attached= sliders.children().last();
       just_attached.data("index",index);
@@ -112,7 +113,7 @@ $(document).ready(function(){
  
  
  //handle making things editable
- 	$(".icon_font").click(function(){
+  $('#all_sliders' ).on('click','.edit_control', function(){
 	 
 		 //get the previous sib
 		// var selected_label = $(this).prev();
@@ -125,27 +126,27 @@ $(document).ready(function(){
 	//	$(selected_label).siblings(".save").show();
 	
 	});
+  $('#all_sliders' ).on('click',".delete_control",function(){
+    var index = ($(this).parents(".slider_container").data('index'));
+    corners.splice(index,1);
+    $('canvas').trigger('updateCorners');
+  })
 	
-	$(".save").click(function(){
+	$('#all_sliders' ).on('click',".save",function(){
 		//get corresponding label
-		var label_num = $(this).siblings(".label").attr("id").substring(6,$(this).siblings(".label").attr("id").length);
-		var corner_id = "#corner_" + label_num;
-		
-		//get new text
+		var index = $(this).parents(".slider_container").data('index');
 		var new_html = $(this).siblings(".label").html();
 		//set corner label
 		
-		$(corner_id).html(new_html);
-	
-	
-		
+		corners[index].name=new_html;
+    
 		//set uneditable
 		$(this).siblings(".label").blur();
 		$(this).siblings(".label").attr('contentEditable', false);	
 	//	$(this).hide();
 		});
 	
-	$(".label").bind("keydown", function(e) {
+	$('#all_sliders' ).on('keydown',".label", function(e) {
  
   		if (e.keyCode == 13 || e.keyCode == 9) {   
 		          
@@ -155,7 +156,6 @@ $(document).ready(function(){
   	}
 });
 		
-   $(".button").button();
  	$("#new_strength").click(
      function()  {
        addCorner("Rename Me");
