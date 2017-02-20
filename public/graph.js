@@ -115,17 +115,22 @@
       var label_x = Math.round(CENTER_X + (220*cos_value));
       var label_y = Math.round(CENTER_Y + (220*sin_value));
       var align;
-      var font_size = 14;
+      var font_size = 16;
+      var max_size = CENTER_X*2;
+      
       if (cos_value < -0.6) {
         align = "right";
+        max_size = label_x-1;
       } else if (cos_value > 0.6) {
         align = "left";
+        max_size = CENTER_X*2-label_x-1;
       } else {
         align = "center";
       }
       $("#graph_canvas").drawText({
             fillStyle: '#36c',
             fontSize: font_size + 'pt',
+            maxWidth: max_size,
             fontFamily: 'Trebuchet MS, sans-serif',
             align: align,
             respectAlign: true,
@@ -138,16 +143,26 @@
       do {
        
         var margin_ok = false;
-        font_size--;
         if (align == 'center') {
+          if (label_x != CENTER_X) {
+            var cur_width = $('#graph_canvas').measureText('corner_label' + curr_corner).width;
+            if (label_x < CENTER_X && Math.round(cur_width/2) > CENTER_X-label_x-5) {
+              label_x = CENTER_X - Math.round(cur_width/2)-5;
+            }
+            if (label_x > CENTER_X && Math.round(cur_width/2) > label_x-CENTER_X-5) {
+                label_x = CENTER_X + Math.round(cur_width/2)+5;
+            }
+            $('#graph_canvas').setLayer('corner_label' + curr_corner, { x: label_x }).drawLayers();
+
+          }
           margin_ok = true;
         } else if (align == 'right') {
-          console.log('rt',label_x,$('#graph_canvas').measureText('corner_label' + curr_corner).width);
+          font_size--;
           if (label_x - $('#graph_canvas').measureText('corner_label' + curr_corner).width >= 1) {
             margin_ok = true;
           }
         } else if (align == 'left') {
-          console.log('lf',label_x,$('#graph_canvas').measureText('corner_label' + curr_corner).width);
+          font_size--;
           if (label_x + $('#graph_canvas').measureText('corner_label' + curr_corner).width <= CENTER_X*2-1) {
             margin_ok = true;
           }
