@@ -115,7 +115,7 @@
       var label_x = Math.round(CENTER_X + (220*cos_value));
       var label_y = Math.round(CENTER_Y + (220*sin_value));
       var align;
-      var font_size = 20;
+      var font_size = 14;
       if (cos_value < -0.6) {
         align = "right";
       } else if (cos_value > 0.6) {
