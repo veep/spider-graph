@@ -1,95 +1,84 @@
 // JavaScript Document
+var corners = [  ];
+function addCorner(name) {
+    corners.push( { name: name, score: 1});
+    $('canvas').trigger('updateCorners');
+}
+
 $(document).ready(function(){
 	
 	
-		
-	var SCORES = new Object();
-	SCORES["NE"] = 1;
-	SCORES["NNE"]  = 1;
-	SCORES["NNW"]  = 1;
-	SCORES["NW"]  = 1;
-	SCORES["SW"]  = 1;
-	SCORES["SSW"]  = 1;
-	SCORES["SSE"]  = 1;
-	SCORES["SE"]  = 1;
-	
-	var CORNERS = new Object();
-	CORNERS["1"] = "NE";
-	CORNERS["3"] = "NNE";
-	CORNERS["5"] = "NNW";
-	CORNERS["7"] = "NW";
-	CORNERS["9"] = "SW";
-	CORNERS["11"] = "SSW";
-	CORNERS["13"] = "SSE";
-	CORNERS["15"] = "SE";
-	
-	
-	var CENTER_X=300;
+  var CENTER_X=300;
 	var CENTER_Y=300;
 	 
 	
-	var NNW_X=224;
-	var NNW_Y=116;
-	var NNE_X= 376;
-	var NNE_Y= 116;
-	var NW_X = 116;
-	var NW_Y = 223;
-	var SSE_X = 376;
-	var SSE_Y = 484;
-	var SSW_X = 223;
-	var SSW_Y = 484;
-	var NE_X = 484;
-	var NE_Y = 223;
-	var SE_X = 485;
-	var SE_Y = 377;
-	var SW_X = 116;
-	var SW_Y = 377;
-	
-	
+  $( "canvas" ).on( "updateCorners",
+                   function() {
+    drawTriangles();
+    updateSliders();
+  });
+  
+	function drawTriangles(){
+      $("#graph_canvas").clearCanvas();
 
-
-
-
-	drawAllTriangles();
-	
-	function drawAllTriangles(){
-		//draw polygon
+    if (corners.length < 3) {
+        return;
+    }
+    
 		$("#graph_canvas").drawPolygon({
 		  fillStyle: "#fff",
-		  layer:true,
 		  name:"polygon",
 		  strokeStyle: "#000",
-		  x:300, y:300,
+		  x:CENTER_X, y:CENTER_Y,
 		  radius: 200,
-		  sides: 8
+      rotate: (corners.length % 2 ? 360/corners.length/2 : 0),  // always have a flat top
+		  sides: corners.length
 		});
 		
-		for(var key in CORNERS){
-			drawTriangle(CORNERS[key]);	
-		}
-	}
+ 
+    for (var i = 0; i < corners.length-1; i++) {
+      drawTriangle(corners[i],corners[i+1],i+1,i+2);
+    }
+    drawTriangle(corners[corners.length-1],corners[0],corners.length,1);
+}
 	
-	function drawTriangle(corner){
-		
-		for (var key in CORNERS){
-			if (CORNERS[key] == corner){
-				var curr_corner = key;
-				break;	
-			}
-		}
-		var next_corner = parseInt(curr_corner)+2 + "";
-		if (next_corner == 17){next_corner = 1;}
-		curr_score = SCORES[corner];
-		next_score = SCORES[CORNERS[next_corner]];
-		
-	//mask old triangle
-		
-	
+  function updateSliders() {
+    var sliders = $('#all_sliders' );
+    sliders.html('');
+    corners.forEach(function(item, index){
+      sliders.append('<div class="slider_container">'
+      + '<div class="slider_label">' 
+      + '<span class="label">' + item.name + '</span>'
+      + '<span class="save"><input type="button" class="button" value="save" /></span>' 
+      + '<span class="icon_font">a</span>'
+      + '</div><div  class="slider"></div></div>');
+      var just_attached= sliders.children().last();
+      just_attached.data("index",index);
+      just_attached.children(".slider").slider({
+      range: "max",
+      min: 1,
+      max: 10,
+      value: item.score,
+      slide: function( event, ui ) {
+        var corner_index = $(event.target).parent().data('index');
+		    corners[corner_index].score = parseInt(ui.value);
+        drawTriangles();	
+      }
+   });
+    })
+  }
+   $('canvas').trigger('updateCorners');
+
+	function drawTriangle(corner1,corner2,curr_corner, next_corner) {    
+
+		var curr_score = corner1.score
+		var next_score = corner2.score		
+	  var adjust = -Math.PI/2-3*Math.PI/corners.length;
 	//draw new triangle
-		var x1 = Math.round(CENTER_X + (20*curr_score*Math.cos(curr_corner*Math.PI/8)));
-		var y1 = Math.round(CENTER_Y - (20*curr_score*Math.sin(curr_corner*Math.PI/8)));
-		var x2 = Math.round(CENTER_X + (20*next_score*Math.cos(next_corner*Math.PI/8)));
-		var y2 = Math.round(CENTER_Y - (20*next_score*Math.sin(next_corner*Math.PI/8)));
+		var x1 = Math.round(CENTER_X + (20*curr_score*Math.cos(adjust+curr_corner*Math.PI*2/corners.length)));
+		var y1 = Math.round(CENTER_Y + (20*curr_score*Math.sin(adjust+curr_corner*Math.PI*2/corners.length)));
+		var x2 = Math.round(CENTER_X + (20*next_score*Math.cos(adjust+next_corner*Math.PI*2/corners.length)));
+		var y2 = Math.round(CENTER_Y + (20*next_score*Math.sin(adjust+next_corner*Math.PI*2/corners.length)));
 	
 		
 		
@@ -107,54 +96,19 @@ $(document).ready(function(){
 		c2.closePath();
 		c2.fill();
 		
-		
 		$("#graph_canvas").drawLine({
 			  strokeStyle: "#ccc",
 			  strokeWidth: 1,
 			  x1: CENTER_X, y1: CENTER_Y,
-			  x2: NNE_X, y2: NNE_Y,
-			  
-			  x3: CENTER_X, y3:CENTER_Y,
-			  x4:NNW_X, y4: NNW_Y,
-			  
-			  x5: CENTER_X, y5:CENTER_Y,
-			  x6: SSE_X, y6:SSE_Y,	
-			  
-			  x7: CENTER_X, y7:CENTER_Y,
-			  x8: NW_X, y8:NW_Y,	
-			  
-			  x9: CENTER_X, y9:CENTER_Y,
-			  x10: NE_X, y10:NE_Y,
-			  
-			  x11: CENTER_X, y11:CENTER_Y,
-			  x12: SW_X, y12:SW_Y,
-				 
-			  x13: CENTER_X, y13:CENTER_Y,
-			  x14: SE_X, y14:SE_Y,
-			  
-			  x15: CENTER_X, y15:CENTER_Y,
-			  x16: SSW_X, y16:SSW_Y,	
+			  x2: Math.round(CENTER_X + (200*Math.cos(adjust+curr_corner*Math.PI*2/corners.length))),
+        y2: Math.round(CENTER_Y + (200*Math.sin(adjust+curr_corner*Math.PI*2/corners.length)))
 		});
 	
 		
 
 }
 
-
- $( ".slider" ).slider({
-      range: "max",
-      min: 1,
-      max: 10,
-      value: 1,
-      slide: function( event, ui ) {
-        var slider_id = event.target.id;
-		var slider_num = slider_id.substring(7,slider_id.length);
-		var corner = CORNERS[slider_num];
-		SCORES[corner] = parseInt(ui.value);
-		drawAllTriangles();
-		
-      }
-    });
+  
  
  
  //handle making things editable
@@ -202,6 +156,11 @@ $(document).ready(function(){
 });
 		
    $(".button").button();
- 	
+ 	$("#new_strength").click(
+     function()  {
+       addCorner("Rename Me");
+       return false;
+     }
+    );
 });
 

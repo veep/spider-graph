@@ -25,88 +25,30 @@
    	<div class="left_col">
         <canvas id="graph_canvas" width="600" height="600">
       </canvas>
-        
-        <div class="label" id="corner_5">
-            Interaction Design 
-        </div>
-        <div class="label" id="corner_3">
-            User Research
-        </div>
-        <div class="label" id="corner_9">
-            Usability Testing
-        </div>
-        <div class="label" id="corner_1">
-            Information Architecture
-        </div>
-        <div class="label" id="corner_7">
-            User Stories 
-        </div>
-        <div class="label" id="corner_15">
-            Ideation
-        </div>
-        <div class="label" id="corner_11">
-            Copy Writing
-        </div>
-        <div class="label" id="corner_13">
-            Visual Design
-        </div>
+      
     </div>
     <div class="right_col">
     	<h3>What's Your Fort&eacute;?</h3>
-    	<div class="slider_container">
-        	<div class="slider_label"><span id="label_5" class="label">Interaction Design </span><span class="save"><input type="button" class="button" value="save" /></span>
-            <span class="icon_font">a</span>
-            </div>
-            <div  class="slider" id="slider_5"></div>
-        </div>
+      <div id="all_sliders">
+       
         
-        <div class="slider_container">
-        	<div class="slider_label"><span id="label_3" class="label">User Research </span><span class="save"><input type="button" class="button" value="save" /></span><span class="icon_font">a</span></div>
-            <div  class="slider" id="slider_3"></div>
-        </div>
-        
-        
-        <div class="slider_container">
-        	<div class="slider_label"><span id="label_1" class="label">Information Architecture </span><span class="save"><input type="button" class="button" value="save" /></span> <span class="icon_font">a</span></div>
-            <div  class="slider" id="slider_1"></div>
-        </div>
-        
-        <div class="slider_container">
-        	<div class="slider_label"><span id="label_15" class="label">Ideation </span><span class="save"><input type="button" class="button" value="save" /></span><span class="icon_font">a</span></div>
-            <div  class="slider" id="slider_15"></div>
-        </div>
-        
-        <div class="slider_container">
-        	<div class="slider_label"><span id="label_13" class="label">Visual Design </span> <span class="save"><input type="button" class="button" value="save" /></span><span class="icon_font">a</span></div>
-            <div  class="slider" id="slider_13"></div>
-        </div>
-        
-        <div class="slider_container">
-        	<div class="slider_label"><span id="label_11" class="label">Copy Writing </span><span class="save"><input type="button" class="button" value="save" /></span><span class="icon_font">a</span></div>
-            <div   class="slider" id="slider_11"></div>
-        </div>
-        
-        <div class="slider_container">
-        	<div class="slider_label"><span id="label_9" class="label">Usability Testing </span><span class="save"><input type="button" class="button" value="save" /></span><span class="icon_font">a</span></div>
-            <div  class="slider" id="slider_9"></div>
-        </div>
-        <div class="slider_container">
-        	<div class="slider_label"><span id="label_7" class="label">User Stories </span><span class="save"><input type="button" class="button" value="save" /></span> <span class="icon_font">a</span></div>
-            <div   class="slider" id="slider_7"></div>
-        </div>
+   
+      </div>
+    <input type="button" class="button" id="new_strength" value="Add New" /> 
     </div>
 </div>
-    <!-- Your web-app is https, so your scripts need to be too -->
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
-          
-            crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-          
-            crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" crossorigin="anonymous"></script>
     <script src="/jcanvas.min.js"></script>
-
     <script src="/graph.js"></script>
-
-  </body>
+    <script>
+      addCorner('Strength 1');
+      addCorner('Strength 2');
+      addCorner('Strength 3');
+      addCorner('Strength 4');
+      addCorner('Strength 5');
+    </script>
+    </body>
 </html>
 
