@@ -26,10 +26,9 @@
    	<div class="left_col">
         <canvas id="graph_canvas" width="600" height="600">
       </canvas>
-      
     </div>
-    <div class="right_col">
-    	<h3>What's Your Fort&eacute;?</h3>
+    <div class="center_col">
+      <h3 id="title"><span id="title_text">What's Your Fort&eacute;?</span> <i class="edit_title fa fa-pencil"></i></h3>
       <div id="all_sliders">
        
         
@@ -37,8 +36,14 @@
       </div>
     <input type="button" class="button" id="new_strength" value="Add New" /> 
     <input type="button" class="button" id="rotate" value="Rotate Skills" /> 
+    <input type="button" class="button" id="snapshot" value="Snapshot Image" /> 
 
     </div>
+    <div class="right_col">
+      <div id="static_copy">
+      </div>
+  
+  </div>
 </div>
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>

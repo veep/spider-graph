@@ -4,9 +4,10 @@
       corners.push( { name: name, score: 1});
       $('canvas').trigger('updateCorners');
   }
-
+  
   $(document).ready(function(){
 
+    var title = $('#title_text').text();
 
     var CENTER_X=300;
     var CENTER_Y=300;
@@ -15,12 +16,23 @@
     $( "canvas" ).on( "updateCorners",
                      function() {
       drawTriangles();
+      includeTitle();
       updateSliders();
     });
 
     function drawTriangles(){
         $("#graph_canvas").clearCanvas();
         $("#graph_canvas").removeLayers();
+        $("#graph_canvas").drawRect({
+          x: CENTER_X,
+          y: CENTER_Y,
+          width: CENTER_X*2,
+          height: CENTER_Y*2,
+          fillStyle: '#FFF',
+          cornerRadius: 10,
+          layer: true,
+          name: 'bg'
+        })
       if (corners.length < 3) {
           return;
       }
@@ -43,6 +55,20 @@
       drawTriangle(corners[corners.length-1],corners[0],corners.length,1);
   }
 
+    function includeTitle() {
+          $("#graph_canvas").drawText({
+            fillStyle: '#36c',
+            fontSize: '20pt',
+            maxWidth: CENTER_X*2-10,
+            fontFamily: 'Trebuchet MS, sans-serif',
+            layer: true,
+            name: 'title',
+            text: title,
+            x: CENTER_X,
+            y: 30
+    })
+
+    }
     function updateSliders() {
       var sliders = $('#all_sliders' );
       sliders.html('');
@@ -175,7 +201,24 @@
 
 
 
+    function set_title (new_title) {
+      title = new_title;
+      $('#title_text').text(title).blur().attr('contentEditable', false);	
 
+      $('canvas').trigger('updateCorners');
+    }
+
+    $('.edit_title').on('click', function() {
+      $('#title_text').attr('contentEditable',true);
+      $('#title_text').focus();
+    });
+    $('#title_text').on('keydown', function(e) {
+        if (e.keyCode == 13 || e.keyCode == 9) {   
+          e.preventDefault();
+          set_title($(this).text());
+          return false;
+       }
+    })
    //handle making things editable
     $('#all_sliders' ).on('click','.edit_control', function(){
 
@@ -238,6 +281,11 @@
          }
        }
       );
-
+  $("#snapshot").click(
+    function() {
+      var static_image_data = $('#graph_canvas').getCanvasImage();
+      $('#static_copy').html('<h3>Snapshot</h3>' + '<img src="' + static_image_data +'"></img>');
+    }
+  )
 });
 

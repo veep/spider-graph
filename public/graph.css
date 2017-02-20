@@ -11,7 +11,7 @@ body{
 	margin-right:40px;
 	float:left;
 }
-.right_col{
+.center_col,.right_col{
 	width:400px;
 	float:left;
 	margin-top:-20px;
